@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
+import BookingWidget from "../BookingWidget";
 
 
 export default function PlacePage() {
@@ -24,14 +25,14 @@ export default function PlacePage() {
     if (showAllPhotos) {
         return (
             <div className=" absolute inset-0 text-white bg-gray-950 min-h-screen">
-                <div className="bg-gray-950 px-60 py-12 grid gap-4 object-cover ">
+                <div className="bg-gray-950 px-96 py-12 grid gap-4 object-cover ">
                     <div >
                         <h1 className="text-3xl ">Photos of {place.title}</h1>
-                        <button onClick={() => setShowAllPhotos(false)} className=" text-black bg-white font-semibold fixed flex right-60 top-12 gap-1 py-2 px-4 rounded-2xl shadow shadow-black">
+                        <button onClick={() => setShowAllPhotos(false)} className=" text-white bg-transparent font-semibold fixed flex left-10 top-12">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                             </svg>
-                            Close
+
                         </button>
                     </div>
                     {place?.photos?.length > 0 && place.photos.map((photo, index) => (
@@ -46,7 +47,7 @@ export default function PlacePage() {
     }
 
     return (
-        <div className="mt-8 bg-gray-100 -mx-8 px-8 py-8">
+        <div className="mt-8 bg-gray-100 -mx-8 px-8 pt-8">
             <h1 className=" text-3xl font-semibold">{place.title}</h1>
             <a className=" flex gap-1 my-2 font-semibold underline" href={`https://maps.google.com/?=${place.address}`} target="_blank" rel="noreferrer" >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -61,33 +62,33 @@ export default function PlacePage() {
                     <div >
                         {place.photos?.[0] && (
                             <div>
-                                <img className=" aspect-square object-cover" src={'http://localhost:4000/uploads/' + place.photos?.[0]} alt="" />
+                                <img onClick={() => setShowAllPhotos(true)} className=" cursor-pointer aspect-square object-cover" src={'http://localhost:4000/uploads/' + place.photos?.[0]} alt="" />
                             </div>
                         )}
                     </div>
                     <div className=" grid">
                         {place.photos?.[1] && (
                             <div>
-                                <img className=" aspect-square object-cover" src={'http://localhost:4000/uploads/' + place.photos?.[1]} alt="" />
+                                <img onClick={() => setShowAllPhotos(true)} className="cursor-pointer aspect-square object-cover" src={'http://localhost:4000/uploads/' + place.photos?.[1]} alt="" />
                             </div>
                         )}
 
                         {place.photos?.[2] && (
                             <div className=" overflow-hidden">
-                                <img className=" aspect-square object-cover relative top-2" src={'http://localhost:4000/uploads/' + place.photos?.[2]} alt="" />
+                                <img onClick={() => setShowAllPhotos(true)} className="cursor-pointer aspect-square object-cover relative top-2" src={'http://localhost:4000/uploads/' + place.photos?.[2]} alt="" />
                             </div>
                         )}
                     </div>
                     <div className=" grid">
                         {place.photos?.[3] && (
                             <div>
-                                <img className=" aspect-square object-cover" src={'http://localhost:4000/uploads/' + place.photos?.[3]} alt="" />
+                                <img onClick={() => setShowAllPhotos(true)} className="cursor-pointer aspect-square object-cover" src={'http://localhost:4000/uploads/' + place.photos?.[3]} alt="" />
                             </div>
                         )}
 
                         {place.photos?.[4] && (
                             <div className=" overflow-hidden">
-                                <img className=" aspect-square object-cover relative top-2" src={'http://localhost:4000/uploads/' + place.photos?.[4]} alt="" />
+                                <img onClick={() => setShowAllPhotos(true)} className="cursor-pointer aspect-square object-cover relative top-2" src={'http://localhost:4000/uploads/' + place.photos?.[4]} alt="" />
                             </div>
                         )}
                     </div>
@@ -98,6 +99,28 @@ export default function PlacePage() {
                     </svg>
                     Show more photos
                 </button>
+            </div>
+
+            <div className=" mt-14 mb-8 grid gap-12 grid-cols-1 md:grid-cols-[2fr_1fr]">
+                <div>
+                    <div className="my-2">
+                        <h2 className="text-2xl font-semibold">Description</h2>
+                        {place.description}
+                    </div>
+                    Check in : {place.checkIn} <br />
+                    Check out : {place.checkOut} <br />
+                    Max no. of Guests : {place.maxGuests}
+
+                </div>
+                <div>
+                    <BookingWidget place={place} />
+                </div>
+            </div>
+            <div className="bg-white border-t -mx-8 px-6 py-8">
+                <div>
+                    <h2 className="text-2xl font-semibold">Extra Info</h2>
+                </div>
+                <div className="mb-4 mt-1 text-sm text-gray-700 leading-5">{place.extraInfo}</div>
             </div>
 
         </div>
