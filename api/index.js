@@ -28,10 +28,6 @@ app.use(cors({
 
 mongoose.connect(process.env.MONGO_URL);
 
-app.get('/test', (req, res) => {
-    res.json('test ok');
-});
-
 function getUserDataFromReq(req) {
     return new Promise((resolve, rejected) => {
         jwt.verify(req.cookies.token, jwtSecret, {}, async (err, userData) => {
@@ -42,7 +38,12 @@ function getUserDataFromReq(req) {
 }
 app.post('/register', async (req, res) => {
     const { name, email, password } = req.body;
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+        //throw
+        throw new Error("User already exists");
 
+    }
     try {
         const userDoc = await User.create({
             name,

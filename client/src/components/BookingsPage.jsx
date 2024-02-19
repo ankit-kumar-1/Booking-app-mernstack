@@ -18,14 +18,14 @@ export default function BookingsPage() {
 
             <div>
                 {bookings.length > 0 && bookings.map(booking => (
-                    <Link to={`/account/bookings/${booking._id}`} className=" flex gap-4 bg-gray-100 mt-2 rounded-2xl overflow-hidden" key={booking._id}>
+                    <Link to={`/account/bookings/${booking._id}`} className=" flex gap-4 bg-gray-200 mt-2 rounded-2xl overflow-hidden" key={booking._id}>
                         <div className="w-48 ">
                             <PlaceImg place={booking.place} />
                         </div>
                         <div className=" py-3 pr-3 grow">
                             <h2 className=" text-xl">{booking.place.title}</h2>
                             <div className="flex gap-2 items-center border-t border-gray-300 mt-2 text-sm text-gray-500">
-                                <div className=" flex gap-1 items-center">
+                                <div className=" flex my-4 gap-1 items-center">
                                     {differenceInCalendarDays(new Date(booking.checkOut), new Date(booking.checkIn))} nights:
                                 </div>
                                 <div className=" flex gap-1 items-center">
@@ -43,7 +43,7 @@ export default function BookingsPage() {
                                 </div>
 
                             </div>
-                            <div className=" text-lg">
+                            <div className=" text-xl">
                                 Total Price: &#x20B9;{booking.price}
                             </div>
                         </div>
